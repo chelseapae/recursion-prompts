@@ -7,39 +7,143 @@
 // Example: 5! = 5 x 4 x 3 x 2 x 1 = 120
 // factorial(5); // 120
 var factorial = function(n) {
+  //base cases
+    //if n less than zero
+      //return null
+      if (n < 0) {
+        return null;
+      }
+
+    //if n is equal to zero
+      //return 1
+      if (n === 0) {
+        return 1;
+      }
+
+    //if n is not negative
+  //recursive case
+    //calling on n - 1
+      return n * factorial(n - 1)
 };
 
 // 2. Compute the sum of an array of integers.
 // sum([1,2,3,4,5,6]); // 21
 var sum = function(array) {
-};
+  //base case
+   //if array is empty
+      //return 0
+    if (array.length < 1) {
+     return 0;
+    };
+
+  //recursive case
+      //iterate through the array
+    // var copy = array.slice()
+    // return copy.pop() + sum(copy)
+
+    return array[0] + sum(array.slice(1));
+  };
 
 // 3. Sum all numbers in an array containing nested arrays.
 // arraySum([1,[2,3],[[4]],5]); // 15
 var arraySum = function(array) {
+  var sum = 0;
+  if (!Array.isArray(array)) {
+    return array;
+  }
+  array.forEach(function(element) {
+    sum += arraySum(element);
+  });
+  return sum;
 };
 
 // 4. Check if a number is even.
+
 var isEven = function(n) {
+  //base case
+  //n - 2 - 2 - 2 === 0
+
+  n = Math.abs(n)
+
+  if (n === 1) {
+    return false;
+  }
+
+  if (n === 0) {
+    return true;
+  }
+
+  //recursive case
+  return isEven(n - 2)
 };
 
 // 5. Sum all integers below a given integer.
 // sumBelow(10); // 45
 // sumBelow(7); // 21
 var sumBelow = function(n) {
+
+  var isNegative = false;
+  if (n < 0) {
+    isNegative = true;
+    n = Math.abs(n);
+  }
+
+  //base case
+  if (n < 1){
+    return 0;
+  };
+
+  //recursion case
+  if (!isNegative){
+    return n - 1 + sumBelow(n-1)
+  } else {
+    return -(n - 1 + sumBelow(n-1))
+  }
 };
 
 // 6. Get the integers within a range (x, y).
 // range(2,9); // [3,4,5,6,7,8]
 var range = function(x, y) {
+  if (x > y) {
+    return range(y, x).reverse();
+  }
+
+  //base case
+  if (x === y) {
+    return [];
+  }
+
+  if (y - x === 1 || x - y === 1) {
+    return [];
+  }
+
+  //recursion case
+  return [x + 1].concat(range(x + 1, y))
+ // [3]   [4,5,6,7,8]
 };
 
 // 7. Compute the exponent of a number.
 // The exponent of a number says how many times the base number is used as a factor.
 // 8^2 = 8 x 8 = 64. Here, 8 is the base and 2 is the exponent.
-// exponent(4,3); // 64
+// exponent(4,3); // 64   4 * 4 * 4
 // https://www.khanacademy.org/computing/computer-science/algorithms/recursive-algorithms/a/computing-powers-of-a-number
 var exponent = function(base, exp) {
+
+  //base cases
+  if (exp === 0) {
+    return 1;
+  }
+
+  //if exp is negative
+  if (exp < 1) {
+    return 1/(base * exponent(base, (exp * -1) - 1))
+  }
+
+  if (exp === 1) {
+    return base
+  }
+  //recursive case
+  return base * exponent(base, exp - 1)
 };
 
 // 8. Determine if a number is a power of two.
@@ -47,14 +151,43 @@ var exponent = function(base, exp) {
 // powerOfTwo(16); // true
 // powerOfTwo(10); // false
 var powerOfTwo = function(n) {
+  //base case
+  if (n === 0) {
+    return false;
+  }
+
+  if (n === 1) {
+    return true;
+  }
+  //recursive case
+  return powerOfTwo(n / 2);
 };
 
 // 9. Write a function that reverses a string.
 var reverse = function(string) {
+  //base case
+  if (string.length === 0) {
+    return "";
+  }
+
+  //recursive case
+  return (string.slice(string.length - 1)) + reverse(string.slice(0, string.length - 1))
 };
 
 // 10. Write a function that determines if a string is a palindrome.
 var palindrome = function(string) {
+  string = string.toLowerCase()
+
+  //base case
+  if (string.length === 1) {
+    return true;
+  }
+
+  //recursive case
+  if (string[0] === string.slice(-1)) {
+    return palindrome(string.slice(1, -1));
+  }
+  return false;
 };
 
 // 11. Write a function that returns the remainder of x divided by y without using the
@@ -136,6 +269,7 @@ var countKeysInObj = function(obj, key) {
 // countValuesInObj(obj, 'r') // 2
 // countValuesInObj(obj, 'e') // 1
 var countValuesInObj = function(obj, value) {
+
 };
 
 // 24. Find all keys in an object (and nested objects) by a provided name and rename
